@@ -23,10 +23,12 @@ jobs:
             --version="1.0.${{ github.run_number }}" \
             --base-path="." \
             --out-folder="./artifacts"
-  
+
       - name: Push package to Octopus
         run: |
           octopus package upload \
-            --package="./artifacts/my-static-site.1.0.${{ github.run_number }}.zip" \
-            --server="${{ secrets.OCTOPUS_SERVER_URL }}" \
-            --api-key="${{ secrets.OCTOPUS_API_KEY }}"
+            --package="./artifacts/my-static-site.1.0.${{ github.run_number }}.zip"
+        env:
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_SERVER_URL }}
+          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_SPACE: "Default"

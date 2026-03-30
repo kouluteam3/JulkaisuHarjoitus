@@ -14,7 +14,7 @@ step "deploy-to-iis" {
             Octopus.Action.IISWebSite.Bindings = "[{\"protocol\":\"http\",\"port\":\"80\",\"host\":\"\",\"thumbprint\":null,\"certificateVariable\":null,\"requireSni\":\"False\",\"enabled\":\"True\"}]"
             Octopus.Action.IISWebSite.CreateOrUpdateWebSite = "True"
             Octopus.Action.IISWebSite.DeploymentType = "webSite"
-            Octopus.Action.IISWebSite.EnableAnonymousAuthentication = "False"
+            Octopus.Action.IISWebSite.EnableAnonymousAuthentication = "True"
             Octopus.Action.IISWebSite.EnableBasicAuthentication = "False"
             Octopus.Action.IISWebSite.EnableWindowsAuthentication = "True"
             Octopus.Action.IISWebSite.StartApplicationPool = "True"
@@ -28,6 +28,7 @@ step "deploy-to-iis" {
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "octopus-server-built-in"
             Octopus.Action.Package.PackageId = "my-static-site"
+            Octopus.Action.RunOnServer = "false"
         }
         worker_pool_variable = ""
 

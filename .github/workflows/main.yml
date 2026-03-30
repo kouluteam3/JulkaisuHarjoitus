@@ -1,0 +1,29 @@
+name: Deploy Static Site
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Octopus CLI
+        uses: OctopusDeploy/install-octopus-cli-action@v3
+
+      - name: Pack static site
+        run: |
+          octo pack \
+            --id="my-static-site" \
+            --version="1.0.${{ github.run_number }}" \
+            --basePath="." \
+            --outFolder="./artifacts"
+
+      - name: Push package to Octopus
+        run: |
+          octo push \
+            --package="./artifacts/my-static-site.*.zip" \
+            --server="${{ secrets.OCTOPUS_SERVER_URL }}" \
+            --apiKey="${{ secrets.OCTOPUS_API_KEY }}"

@@ -15,15 +15,15 @@ jobs:
 
       - name: Pack static site
         run: |
-          octo pack \
+          octopus package zip create \
             --id="my-static-site" \
             --version="1.0.${{ github.run_number }}" \
-            --basePath="." \
-            --outFolder="./artifacts"
-
+            --base-path="." \
+            --out-folder="./artifacts"
+  
       - name: Push package to Octopus
         run: |
-          octo push \
-            --package="./artifacts/my-static-site.*.zip" \
+          octopus package upload \
+            --package="./artifacts/my-static-site.1.0.${{ github.run_number }}.zip" \
             --server="${{ secrets.OCTOPUS_SERVER_URL }}" \
-            --apiKey="${{ secrets.OCTOPUS_API_KEY }}"
+            --api-key="${{ secrets.OCTOPUS_API_KEY }}"
